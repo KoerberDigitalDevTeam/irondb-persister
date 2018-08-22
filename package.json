@@ -1,0 +1,27 @@
+{
+  "name": "irondb-ingester",
+  "version": "0.0.1",
+  "description": "IronDB RAW Ingestion API",
+  "main": "index.js",
+  "dependencies": {
+    "flatbuffers": "^1.9.0",
+    "jsonschema": "^1.2.4"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^5.3.0",
+    "eslint-config-google": "^0.9.1",
+    "mocha": "^5.2.0"
+  },
+  "scripts": {
+    "test": "mocha 'test/**/*.test.js' || false",
+    "lint": "eslint --cache '**/*js'",
+    "build": "npm run lint && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@https://github.com/KoerberDigitalDevTeam/irondb-ingester.git"
+  },
+  "author": "Pier Fumagalli <pier.fumagalli@koerber.digital>",
+  "license": "MIT"
+}
