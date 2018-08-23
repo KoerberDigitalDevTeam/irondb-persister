@@ -1,12 +1,21 @@
 'use strict'
 
 const expect = require('chai').expect
-const metric = require('../metric')
 
-describe('Metric Object', () => {
+describe('IronDB Object', () => {
   it('should have the required methods', () => {
-    expect(metric).to.be.an('object')
-    expect(metric.validate).to.be.a('function')
+    let irondb = require('..')
+
+    expect(irondb).to.be.an('object')
+
+    expect(irondb.Metric).to.be.a('function')
+
+    expect(irondb.init).to.be.a('function')
+    expect(irondb.persist).to.be.a('function')
+
+    expect(irondb.parse).to.be.a('function')
+    expect(irondb.validate).to.be.a('function')
+    expect(irondb.serialize).to.be.a('function')
   })
 })
 
