@@ -88,11 +88,7 @@ function serializeMetric(metric, builder) {
   let streamTagsOffset = null
   if ((metric.tags != null) && (metric.tags.length > 0)) {
     streamTagsOffset = circonus.MetricValue.createStreamTagsVector(builder,
-      (metric.tags || []).reduce((array, tag, index) => {
-        let tagOffset = createString(builder, tag)
-        array.push(tagOffset)
-        return array
-      }, [])
+      (metric.tags || []).map((tag) => createString(builder, tag))
     )
   }
 
@@ -144,12 +140,7 @@ function serialize(what) {
     let builder = new flatbuffers.Builder(1024)
 
     let offsets = circonus.MetricList.createMetricsVector(builder,
-      what.reduce((array, metric, index) => {
-        if (! (metric instanceof Metric)) metric = validate(metric)
-        let offset = serializeMetric(metric, builder)
-        array.push(offset)
-        return array
-      }, [])
+      validate(what).map((metric) => serializeMetric(metric, builder))
     )
 
     circonus.MetricList.startMetricList(builder)

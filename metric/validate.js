@@ -47,17 +47,7 @@ function validate(metric) {
   if (metric instanceof Metric) return metric
 
   if (Array.isArray(metric)) {
-    let converted = 0
-    let array = metric.reduce((array, current, index) => {
-      if (current instanceof Metric) {
-        array.push(current)
-      } else {
-        array.push(validateMetric(current))
-        converted ++
-      }
-      return array
-    }, [])
-    return converted == 0 ? metric : array
+    return metric.map((m) => m instanceof Metric ? m : validateMetric(m))
   }
 
   if (typeof metric === 'object') return validateMetric(metric)
