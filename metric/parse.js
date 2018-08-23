@@ -46,8 +46,8 @@ function parseMetric(metric) {
   if (generation != 0) throw new TypeError(`Unsupported generation ${generation}`)
 
   // Extract our stream tags
-  let length = metricValue.streamTagsLength(), streamTags = []
-  for (let i = 0; i < length; i ++) streamTags.push(metricValue.streamTags(i))
+  let length = metricValue.streamTagsLength(), tags = []
+  for (let i = 0; i < length; i ++) tags.push(metricValue.streamTags(i))
 
   // Parse the metricValue from MetricValueUnion
   let type = null, value = null
@@ -119,12 +119,12 @@ function parseMetric(metric) {
     name: name == null ? null : name ? name : null,
     value: value,
     type: type,
-    accountId: accountId || 0,
+    account: accountId || 0,
   }
 
   // Optional properties
   values.checkName = checkName
-  values.streamTags = streamTags
+  values.tags = tags
 
   // Wrap our metric
   return new Metric(values)

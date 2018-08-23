@@ -27,9 +27,9 @@ describe('Buffer Serialization', () => {
       name: 'metricName',
       value: 'a value',
       type: 'string',
-      accountId: 0,
+      account: 0,
       checkName: '', // it's always non null
-      streamTags: [], // always an empty array
+      tags: [], // always an empty array
     })
   })
 
@@ -41,8 +41,8 @@ describe('Buffer Serialization', () => {
       value: 999,
       type: 'number',
       checkName: 'theCheckName',
-      accountId: 65535,
-      streamTags: [ 'a:b', 'c:d' ],
+      account: 65535,
+      tags: [ 'a:b', 'c:d' ],
     })
 
     expect(buffer).to.be.instanceof(Buffer)
@@ -57,9 +57,9 @@ describe('Buffer Serialization', () => {
       name: 'metricName',
       value: 999,
       type: 'number',
-      accountId: 65535,
+      account: 65535,
       checkName: 'theCheckName',
-      streamTags: [ 'a:b', 'c:d' ],
+      tags: [ 'a:b', 'c:d' ],
     })
   })
 
@@ -76,8 +76,8 @@ describe('Buffer Serialization', () => {
       value: 999,
       type: 'number',
       checkName: 'theCheckName',
-      accountId: 65535,
-      streamTags: [ 'a:b', 'c:d' ],
+      account: 65535,
+      tags: [ 'a:b', 'c:d' ],
     } ])
 
     expect(buffer).to.be.instanceof(Buffer)
@@ -92,18 +92,18 @@ describe('Buffer Serialization', () => {
       name: 'metricName',
       value: 'a value',
       type: 'string',
-      accountId: 0,
+      account: 0,
       checkName: '', // it's always non null
-      streamTags: [], // always an empty array
+      tags: [], // always an empty array
     }, {
       timestamp,
       uuid,
       name: 'metricName',
       value: 999,
       type: 'number',
-      accountId: 65535,
+      account: 65535,
       checkName: 'theCheckName',
-      streamTags: [ 'a:b', 'c:d' ],
+      tags: [ 'a:b', 'c:d' ],
     } ])
   })
 })

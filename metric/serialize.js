@@ -86,9 +86,9 @@ function serializeMetric(metric, builder) {
 
   // stream_tags: [string] (id: 5)
   let streamTagsOffset = null
-  if ((metric.streamTags != null) && (metric.streamTags.length > 0)) {
+  if ((metric.tags != null) && (metric.tags.length > 0)) {
     streamTagsOffset = circonus.MetricValue.createStreamTagsVector(builder,
-      (metric.streamTags || []).reduce((array, tag, index) => {
+      (metric.tags || []).reduce((array, tag, index) => {
         let tagOffset = createString(builder, tag)
         array.push(tagOffset)
         return array
@@ -131,7 +131,7 @@ function serializeMetric(metric, builder) {
   circonus.Metric.addTimestamp(builder, timestampOffset) // ulong (id: 0)
   circonus.Metric.addCheckName(builder, checkNameOffset) // string (id: 1)
   circonus.Metric.addCheckUuid(builder, checkUuidOffset) // string (id: 2)
-  circonus.Metric.addAccountId(builder, metric.accountId || 0) // int (id: 3)
+  circonus.Metric.addAccountId(builder, metric.account || 0) // int (id: 3)
   circonus.Metric.addValue(builder, valueOffset) // MetricValue (id: 4)
   let metricOffset = circonus.Metric.endMetric(builder)
 

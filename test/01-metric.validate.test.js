@@ -19,7 +19,7 @@ const valid = {
   name: 'metricName',
   value: 'a value',
   type: 'string',
-  accountId: 0,
+  account: 0,
 }
 
 // Clone object and delete properties, e.g.: c({myfoo:1}).d('myfoo')
@@ -48,20 +48,20 @@ describe('Metric Validation Tests', () => {
   it('should validate an array of metrics', () => {
     let result = validate([
       metric,
-      c(metric, { accountId: 123 }),
+      c(metric, { account: 123 }),
       c(metric, { timestamp: 0 }),
       c(metric, { value: 123 }),
-      c(metric, { streamTags: [ 'foo:bar' ] }),
+      c(metric, { tags: [ 'foo:bar' ] }),
     ])
 
     expect(result).to.be.an('array')
 
     expect(result).to.eql([
       valid,
-      c(valid, { accountId: 123 }),
+      c(valid, { account: 123 }),
       c(valid, { timestamp: 0 }),
       c(valid, { value: 123, type: 'number' }),
-      c(valid, { streamTags: [ 'foo:bar' ] }),
+      c(valid, { tags: [ 'foo:bar' ] }),
     ])
   })
 
@@ -242,50 +242,50 @@ describe('Metric Validation Tests', () => {
         .to.eql(c(valid, { checkName: 'the brown lazy fox' }))
     })
 
-    it('should correctly validate the accountId', () => {
-      expect(() => validate(c(metric, { accountId: null })))
+    it('should correctly validate the account', () => {
+      expect(() => validate(c(metric, { account: null })))
         .to.throw(TypeError, 'Found 1 errors validating metric')
-        .property('details').members([ 'metric.accountId is not of a type(s) number' ])
-      expect(() => validate(c(metric, { accountId: true })))
+        .property('details').members([ 'metric.account is not of a type(s) number' ])
+      expect(() => validate(c(metric, { account: true })))
         .to.throw(TypeError, 'Found 1 errors validating metric')
-        .property('details').members([ 'metric.accountId is not of a type(s) number' ])
-      expect(() => validate(c(metric, { accountId: -1 })))
+        .property('details').members([ 'metric.account is not of a type(s) number' ])
+      expect(() => validate(c(metric, { account: -1 })))
         .to.throw(TypeError, 'Found 1 errors validating metric')
-        .property('details').members([ 'metric.accountId must have a minimum value of 0' ])
-      expect(() => validate(c(metric, { accountId: 0x7FFFFFFF + 1 })))
+        .property('details').members([ 'metric.account must have a minimum value of 0' ])
+      expect(() => validate(c(metric, { account: 0x7FFFFFFF + 1 })))
         .to.throw(TypeError, 'Found 1 errors validating metric')
-        .property('details').members([ 'metric.accountId must have a maximum value of 2147483647' ])
+        .property('details').members([ 'metric.account must have a maximum value of 2147483647' ])
 
-      expect(validate(c(metric, { accountId: 0 })))
-        .to.eql(c(valid, { accountId: 0 }))
-      expect(validate(c(metric, { accountId: 123 })))
-        .to.eql(c(valid, { accountId: 123 }))
+      expect(validate(c(metric, { account: 0 })))
+        .to.eql(c(valid, { account: 0 }))
+      expect(validate(c(metric, { account: 123 })))
+        .to.eql(c(valid, { account: 123 }))
     })
 
     it('should correctly validate the stream tags', () => {
-      expect(() => validate(c(metric, { streamTags: null })))
+      expect(() => validate(c(metric, { tags: null })))
         .to.throw(TypeError, 'Found 1 errors validating metric')
-        .property('details').members([ 'metric.streamTags is not of a type(s) array' ])
-      expect(() => validate(c(metric, { streamTags: [ null ] })))
+        .property('details').members([ 'metric.tags is not of a type(s) array' ])
+      expect(() => validate(c(metric, { tags: [ null ] })))
         .to.throw(TypeError, 'Found 1 errors validating metric')
-        .property('details').members([ 'metric.streamTags[0] is not of a type(s) string' ])
-      expect(() => validate(c(metric, { streamTags: [ 123 ] })))
+        .property('details').members([ 'metric.tags[0] is not of a type(s) string' ])
+      expect(() => validate(c(metric, { tags: [ 123 ] })))
         .to.throw(TypeError, 'Found 1 errors validating metric')
-        .property('details').members([ 'metric.streamTags[0] is not of a type(s) string' ])
-      expect(() => validate(c(metric, { streamTags: [ 'foo' ] })))
+        .property('details').members([ 'metric.tags[0] is not of a type(s) string' ])
+      expect(() => validate(c(metric, { tags: [ 'foo' ] })))
         .to.throw(TypeError, 'Found 1 errors validating metric')
-        .property('details').members([ 'metric.streamTags[0] does not match pattern "^[-`+A-Za-z0-9!@#\\\\$%^&\\"\'\\\\/\\\\?\\\\._]+:[-`+A-Za-z0-9!@#\\\\$%^&\\"\'\\\\/\\\\?\\\\._:=]+$"' ])
-      expect(() => validate(c(metric, { streamTags: [ 123, 'foo' ] })))
+        .property('details').members([ 'metric.tags[0] does not match pattern "^[-`+A-Za-z0-9!@#\\\\$%^&\\"\'\\\\/\\\\?\\\\._]+:[-`+A-Za-z0-9!@#\\\\$%^&\\"\'\\\\/\\\\?\\\\._:=]+$"' ])
+      expect(() => validate(c(metric, { tags: [ 123, 'foo' ] })))
         .to.throw(TypeError, 'Found 2 errors validating metric')
         .property('details').members([
-          'metric.streamTags[1] does not match pattern "^[-`+A-Za-z0-9!@#\\\\$%^&\\"\'\\\\/\\\\?\\\\._]+:[-`+A-Za-z0-9!@#\\\\$%^&\\"\'\\\\/\\\\?\\\\._:=]+$"',
-          'metric.streamTags[0] is not of a type(s) string',
+          'metric.tags[1] does not match pattern "^[-`+A-Za-z0-9!@#\\\\$%^&\\"\'\\\\/\\\\?\\\\._]+:[-`+A-Za-z0-9!@#\\\\$%^&\\"\'\\\\/\\\\?\\\\._:=]+$"',
+          'metric.tags[0] is not of a type(s) string',
         ])
 
-      expect(validate(c(metric, { streamTags: [] })))
-        .to.eql(c(valid, { streamTags: [] }))
-      expect(validate(c(metric, { streamTags: [ 'foo:bar', '1:2' ] })))
-        .to.eql(c(valid, { streamTags: [ 'foo:bar', '1:2' ] }))
+      expect(validate(c(metric, { tags: [] })))
+        .to.eql(c(valid, { tags: [] }))
+      expect(validate(c(metric, { tags: [ 'foo:bar', '1:2' ] })))
+        .to.eql(c(valid, { tags: [ 'foo:bar', '1:2' ] }))
     })
   })
 })

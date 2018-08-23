@@ -69,7 +69,7 @@ module.exports = Object.freeze({
     },
 
     // the account ID, if unspecified, will default to ZERO (0)
-    accountId: {
+    account: {
       type: 'number',
       minimum: 0,
       maximum: 0x7FFFFFFF,
@@ -84,7 +84,7 @@ module.exports = Object.freeze({
     },
 
     // Stream tags to associate with this metric
-    streamTags: {
+    tags: {
       type: 'array',
       items: {
         type: 'string',

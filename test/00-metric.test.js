@@ -18,4 +18,3 @@ describe('IronDB Object', () => {
     expect(irondb.serialize).to.be.a('function')
   })
 })
-

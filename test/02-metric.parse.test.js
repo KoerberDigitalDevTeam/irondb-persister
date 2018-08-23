@@ -49,9 +49,9 @@ describe('Buffer Parsing', () => {
       name: 'crash-string',
       value: 'a value',
       type: 'string',
-      accountId: 0,
+      account: 0,
       checkName: 'checkName',
-      streamTags: [],
+      tags: [],
     },
     {
       timestamp: 1625724269,
@@ -59,9 +59,9 @@ describe('Buffer Parsing', () => {
       name: 'crash-number',
       value: 1,
       type: 'number',
-      accountId: 0,
+      account: 0,
       checkName: 'checkName',
-      streamTags: [],
+      tags: [],
     },
     {
       timestamp: 1625724269,
@@ -69,9 +69,9 @@ describe('Buffer Parsing', () => {
       name: 'crash-boolean',
       value: 'false',
       type: 'string',
-      accountId: 0,
+      account: 0,
       checkName: 'checkName',
-      streamTags: [],
+      tags: [],
     },
     {
       timestamp: 1625726269,
@@ -79,9 +79,9 @@ describe('Buffer Parsing', () => {
       name: 'crash-string',
       value: 'a different value',
       type: 'string',
-      accountId: 0,
+      account: 0,
       checkName: 'checkName',
-      streamTags: [],
+      tags: [],
     },
     {
       timestamp: 1625726269,
@@ -89,9 +89,9 @@ describe('Buffer Parsing', () => {
       name: 'crash-number',
       value: 5,
       type: 'number',
-      accountId: 0,
+      account: 0,
       checkName: 'checkName',
-      streamTags: [],
+      tags: [],
     },
     {
       timestamp: 1625726269,
@@ -99,9 +99,9 @@ describe('Buffer Parsing', () => {
       name: 'crash-boolean',
       value: 'true',
       type: 'string',
-      accountId: 0,
+      account: 0,
       checkName: 'checkName',
-      streamTags: [],
+      tags: [],
     } ])
   })
 })

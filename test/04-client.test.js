@@ -74,9 +74,9 @@ describe('Client Test', () => {
         name: 'metricName',
         value: 'a value',
         type: 'string',
-        accountId: 0,
+        account: 0,
         checkName: '',
-        streamTags: [],
+        tags: [],
       } ])
     })
   })
@@ -93,8 +93,8 @@ describe('Client Test', () => {
       name: 'metricNumber',
       checkName: 'myName',
       value: 12345.6789,
-      accountId: 999,
-      streamTags: [ 'a:b', 'c:d' ],
+      account: 999,
+      tags: [ 'a:b', 'c:d' ],
     } ]).then((result) => {
       expect(result).to.eql({
         'records': 2,
@@ -109,18 +109,18 @@ describe('Client Test', () => {
         name: 'metricString',
         value: 'a value',
         type: 'string',
-        accountId: 0,
+        account: 0,
         checkName: '',
-        streamTags: [],
+        tags: [],
       }, {
         timestamp: timestamp + 1000,
         uuid,
         name: 'metricNumber',
         value: 12345.6789,
         type: 'number',
-        accountId: 999,
+        account: 999,
         checkName: 'myName',
-        streamTags: [ 'a:b', 'c:d' ],
+        tags: [ 'a:b', 'c:d' ],
       } ])
     })
   })
