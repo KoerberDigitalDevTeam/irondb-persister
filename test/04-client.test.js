@@ -60,7 +60,13 @@ describe('Client Test', () => {
       name: 'metricName',
       value: 'a value',
     }).then((result) => {
-      expect(result).to.equal(1)
+      expect(result).to.eql({
+        'records': 1,
+        'updated': 0,
+        'misdirected': 0,
+        'errors': 0,
+      })
+
       expect(request).to.eql([ {
         timestamp,
         uuid,
@@ -89,7 +95,13 @@ describe('Client Test', () => {
       accountId: 999,
       streamTags: [ 'a:b', 'c:d' ],
     } ]).then((result) => {
-      expect(result).to.equal(2)
+      expect(result).to.eql({
+        'records': 2,
+        'updated': 0,
+        'misdirected': 0,
+        'errors': 0,
+      })
+
       expect(request).to.eql([ {
         timestamp,
         uuid,
