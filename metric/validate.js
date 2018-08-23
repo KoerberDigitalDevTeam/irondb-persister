@@ -1,6 +1,6 @@
 'use strict'
 
-const { Metric, MetricList } = require('./classes.js')
+const Metric = require('./metric.js')
 const schema = require('./schema.js')
 const Validator = require('../lib/validator.js')
 const validator = new Validator()
@@ -45,14 +45,19 @@ function validateMetric(metric) {
 // Validate and normalise a metric or array of metrics
 function validate(metric) {
   if (metric instanceof Metric) return metric
-  if (metric instanceof MetricList) return metric
 
   if (Array.isArray(metric)) {
+    let converted = 0
     let array = metric.reduce((array, current, index) => {
-      array.push(validateMetric(current))
+      if (current instanceof Metric) {
+        array.push(current)
+      } else {
+        array.push(validateMetric(current))
+        converted ++
+      }
       return array
     }, [])
-    return new MetricList(array)
+    return converted == 0 ? metric : array
   }
 
   if (typeof metric === 'object') return validateMetric(metric)
