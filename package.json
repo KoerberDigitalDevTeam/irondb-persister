@@ -1,7 +1,7 @@
 {
   "name": "irondb-persister",
   "version": "0.0.1",
-  "description": "IronDB RAW Persistence API",
+  "description": "IronDB RAW Persister",
   "main": "index.js",
   "dependencies": {
     "flatbuffers": "^1.9.0",
