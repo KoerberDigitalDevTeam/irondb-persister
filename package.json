@@ -1,7 +1,7 @@
 {
-  "name": "irondb-ingester",
+  "name": "irondb-persister",
   "version": "0.0.1",
-  "description": "IronDB RAW Ingestion API",
+  "description": "IronDB RAW Persistence API",
   "main": "index.js",
   "dependencies": {
     "flatbuffers": "^1.9.0",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@https://github.com/KoerberDigitalDevTeam/irondb-ingester.git"
+    "url": "ssh://git@https://github.com/KoerberDigitalDevTeam/irondb-persister.git"
   },
   "author": "Pier Fumagalli <pier.fumagalli@koerber.digital>",
   "license": "MIT"
