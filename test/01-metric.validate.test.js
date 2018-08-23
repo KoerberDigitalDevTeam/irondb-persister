@@ -20,8 +20,7 @@ const valid = {
 }
 
 const expect = require('chai').expect
-const { validate } = require('../metric')
-const { Metric, MetricList } = require('../metric/classes.js')
+const { Metric, validate } = require('../metric')
 
 // Clone object and delete properties, e.g.: c({myfoo:1}).d('myfoo')
 function c(...objects) {
@@ -55,7 +54,7 @@ describe('Metric Validation Tests', () => {
       c(metric, { streamTags: [ 'foo:bar' ] }),
     ])
 
-    expect(result).to.be.instanceof(MetricList)
+    expect(result).to.be.an('array')
 
     expect(result).to.eql([
       valid,
