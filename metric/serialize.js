@@ -6,15 +6,20 @@ const Metric = require('./metric.js')
 const validate = require('./validate')
 const circonus = require('../circonus')
 
-/* ========================================================================== *
- *       generation: short = 0 (id: 4);                                       *
- *       stream_tags: [string] (id: 5);                                       *
- * }                                                                          *
+/* ========================================================================== */
 
- * table MetricValue {                                                        *
- *       generation: short = 0 (id: 4);                                       *
- * }                                                                          *
- * ========================================================================== */
+function createString(builder, string) {
+  let map = builder.__stringCacheMap
+  if (map == null) map = builder.__stringCacheMap = new Map()
+
+  if (map.has(string)) return map.get(string)
+
+  let offset = builder.createString(string)
+  map.set(string, offset)
+  return offset
+}
+
+/* ========================================================================== */
 
 function serializeMetric(metric, builder) {
   // Timestamp is used by both Metric and MetricValue, serialize it first
@@ -35,7 +40,7 @@ function serializeMetric(metric, builder) {
    * ------------------------------------------------------------------------ */
 
   // name: string (id: 0)
-  let metricValueNameOffset = builder.createString(metric.name)
+  let metricValueNameOffset = createString(builder, metric.name)
 
   // valueType: _type (id: 2)
   // value: MetricValueUnion (id: 3)
@@ -58,7 +63,7 @@ function serializeMetric(metric, builder) {
       metricValueOffset = circonus.AbsentStringValue.endAbsentStringValue(builder)
     } else {
       metricValueType = circonus.MetricValueUnion.StringValue
-      let offset = builder.createString(metric.value)
+      let offset = createString(builder, metric.value)
       circonus.StringValue.startStringValue(builder)
       circonus.StringValue.addValue(builder, offset)
       metricValueOffset = circonus.StringValue.endStringValue(builder)
@@ -72,7 +77,7 @@ function serializeMetric(metric, builder) {
   if ((metric.streamTags != null) && (metric.streamTags.length > 0)) {
     streamTagsOffset = circonus.MetricValue.createStreamTagsVector(builder,
       (metric.streamTags || []).reduce((array, tag, index) => {
-        let tagOffset = builder.createString(tag)
+        let tagOffset = createString(builder, tag)
         array.push(tagOffset)
         return array
       }, [])
@@ -104,10 +109,10 @@ function serializeMetric(metric, builder) {
    * ------------------------------------------------------------------------ */
 
   // string (id: 1)
-  let checkNameOffset = builder.createString(metric.checkName || '')
+  let checkNameOffset = createString(builder, metric.checkName || '')
 
   // string (id: 2)
-  let checkUuidOffset = builder.createString(metric.uuid)
+  let checkUuidOffset = createString(builder, metric.uuid)
 
   // table Metric
   circonus.Metric.startMetric(builder)
