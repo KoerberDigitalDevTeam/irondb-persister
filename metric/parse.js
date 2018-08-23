@@ -2,7 +2,7 @@
 
 const flatbuffers = require('flatbuffers').flatbuffers
 const circonus = require('../circonus')
-const { Metric, MetricList } = require('./classes.js')
+const Metric = require('./metric.js')
 
 /* ========================================================================== *
  * We destructure the two flatbuffer tables listed below into a single object *
@@ -48,7 +48,6 @@ function parseMetric(metric) {
   // Extract our stream tags
   let length = metricValue.streamTagsLength(), streamTags = []
   for (let i = 0; i < length; i ++) streamTags.push(metricValue.streamTags(i))
-  if (length == 0) streamTags = null
 
   // Parse the metricValue from MetricValueUnion
   let type = null, value = null
@@ -124,9 +123,8 @@ function parseMetric(metric) {
   }
 
   // Optional properties
-  checkName = checkName == null ? null : checkName ? checkName : null
-  if (checkName) values.checkName = checkName
-  if (streamTags) values.streamTags = streamTags
+  values.checkName = checkName
+  values.streamTags = streamTags
 
   // Wrap our metric
   return new Metric(values)
@@ -141,7 +139,7 @@ function parseList(list) {
     metrics.push(parseMetric(metric))
   }
 
-  return new MetricList(metrics)
+  return metrics
 }
 
 function parse(buffer) {
