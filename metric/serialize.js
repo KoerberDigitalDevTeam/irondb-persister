@@ -8,25 +8,37 @@ const circonus = require('../circonus')
 
 /* ========================================================================== */
 
-function createString(builder, string) {
+// Cache a persisted value in the string
+function cache(builder, what, persister) {
   let map = builder.__stringCacheMap
   if (map == null) map = builder.__stringCacheMap = new Map()
 
-  if (map.has(string)) return map.get(string)
+  if (map.has(what)) return map.get(what)
 
-  let offset = builder.createString(string)
-  map.set(string, offset)
+  let offset = persister(what)
+  map.set(what, offset)
   return offset
+}
+
+// Create a string in the buffer and cache it
+function createString(builder, string) {
+  return cache(builder, string, (string) => builder.createString(string))
+}
+
+// Create a long in the buffer and cache it
+function createLong(builder, long) {
+  return cache(builder, long, (long) => {
+    let low = long % 0x100000000
+    let high = ( long - low ) / 0x100000000
+    return builder.createLong(low, high)
+  })
 }
 
 /* ========================================================================== */
 
 function serializeMetric(metric, builder) {
-  // Timestamp is used by both Metric and MetricValue, serialize it first
-  let timestamp = metric.timestamp || 0
-  let timestampLow = timestamp % 0x100000000
-  let timestampHigh = ( timestamp - timestampLow ) / 0x100000000
-  let timestampOffset = builder.createLong(timestampLow, timestampHigh)
+  // Same timestamp used by both Metric and MetricValue, serialize it first
+  let timestampOffset = createLong(builder, metric.timestamp || 0)
 
   /* ------------------------------------------------------------------------ *
    * table MetricValue {                                                      *
