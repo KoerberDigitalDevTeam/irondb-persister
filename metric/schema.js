@@ -40,6 +40,8 @@ module.exports = Object.freeze({
     timestamp: {
       type: [ 'number', 'string' ],
       format: 'date-time',
+      minimum: 0, // 1970-01-01T00:00:00.000Z
+      maximum: 253402300799999, // 9999-12-31T23:59:59.999Z
     },
 
     // the check UUID, must always be present
