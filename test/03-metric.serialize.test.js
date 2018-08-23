@@ -1,6 +1,6 @@
 'use strict'
 
-const { Metric, parse, serialize } = require('../metric')
+const { Metric, parse, serialize } = require('..')
 const expect = require('chai').expect
 
 const uuid = 'd562b0f9-9068-4d01-880f-7df32b4bf9ad'

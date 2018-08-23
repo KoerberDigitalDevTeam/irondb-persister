@@ -1,9 +1,10 @@
 'use strict'
 
+const express = require('express')
 const expect = require('chai').expect
-const client = require('../lib/client')
-const { Metric, parse } = require('../metric')
 const bodyParser = require('body-parser')
+
+const { Metric, init, persist, parse } = require('..')
 
 const uuid = 'd562b0f9-9068-4d01-880f-7df32b4bf9ad'
 const timestamp = Date.now()
@@ -12,7 +13,7 @@ describe('Client Test', () => {
   let server = null, port = null, request = null
 
   before((done) => {
-    let app = require('express')()
+    let app = express()
 
     app.use(bodyParser.raw({ type: '*/*' }))
 
@@ -43,7 +44,7 @@ describe('Client Test', () => {
     server = app.listen(0, '127.0.0.1', () => {
       port = server.address().port
       process.stdout.write('    - ')
-      client.init('127.0.0.1', port)
+      init('127.0.0.1', port)
       done()
     }).on('error', done)
   })
@@ -54,7 +55,7 @@ describe('Client Test', () => {
   })
 
   it('should connect and send a single metric', () => {
-    return client.persist({
+    return persist({
       timestamp,
       uuid,
       name: 'metricName',
@@ -81,7 +82,7 @@ describe('Client Test', () => {
   })
 
   it('should connect and send an array of metrics', () => {
-    return client.persist([ {
+    return persist([ {
       timestamp,
       uuid,
       name: 'metricString',

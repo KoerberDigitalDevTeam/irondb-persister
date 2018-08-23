@@ -28,7 +28,7 @@ const buffer = new Buffer('0c00000043494d4c00000000aafcffff040000000600000008' +
   '00000030303030303030302d303030302d303030302d303030302d30303030303030303030' +
   '3030000000000000000009000000636865636b4e616d65000000', 'hex')
 
-const { Metric, parse, validate } = require('../metric')
+const { Metric, parse, validate } = require('..')
 const expect = require('chai').expect
 
 describe('Buffer Parsing', () => {

@@ -1,5 +1,8 @@
 'use strict'
 
+const expect = require('chai').expect
+const { Metric, validate } = require('..')
+
 const uuid = 'd562b0f9-9068-4d01-880f-7df32b4bf9ad'
 const timestamp = Date.now()
 
@@ -18,9 +21,6 @@ const valid = {
   type: 'string',
   accountId: 0,
 }
-
-const expect = require('chai').expect
-const { Metric, validate } = require('../metric')
 
 // Clone object and delete properties, e.g.: c({myfoo:1}).d('myfoo')
 function c(...objects) {
