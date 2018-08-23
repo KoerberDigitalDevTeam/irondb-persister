@@ -28,15 +28,14 @@ const buffer = new Buffer('0c00000043494d4c00000000aafcffff040000000600000008' +
   '00000030303030303030302d303030302d303030302d303030302d30303030303030303030' +
   '3030000000000000000009000000636865636b4e616d65000000', 'hex')
 
-const { Metric, MetricList } = require('../metric/classes.js')
-const { parse, validate } = require('../metric')
+const { Metric, parse, validate } = require('../metric')
 const expect = require('chai').expect
 
 describe('Buffer Parsing', () => {
   it('should parse a pre-existing well-known buffer', () => {
     let list = parse(buffer)
 
-    expect(list).to.be.instanceof(MetricList)
+    expect(list).to.be.an('array')
 
     list.forEach((metric, index) => {
       expect(metric, `Metric at index ${index}`).to.be.instanceof(Metric)
@@ -52,6 +51,7 @@ describe('Buffer Parsing', () => {
       type: 'string',
       accountId: 0,
       checkName: 'checkName',
+      streamTags: [],
     },
     {
       timestamp: 1625724269,
@@ -61,6 +61,7 @@ describe('Buffer Parsing', () => {
       type: 'number',
       accountId: 0,
       checkName: 'checkName',
+      streamTags: [],
     },
     {
       timestamp: 1625724269,
@@ -70,6 +71,7 @@ describe('Buffer Parsing', () => {
       type: 'string',
       accountId: 0,
       checkName: 'checkName',
+      streamTags: [],
     },
     {
       timestamp: 1625726269,
@@ -79,6 +81,7 @@ describe('Buffer Parsing', () => {
       type: 'string',
       accountId: 0,
       checkName: 'checkName',
+      streamTags: [],
     },
     {
       timestamp: 1625726269,
@@ -88,6 +91,7 @@ describe('Buffer Parsing', () => {
       type: 'number',
       accountId: 0,
       checkName: 'checkName',
+      streamTags: [],
     },
     {
       timestamp: 1625726269,
@@ -97,6 +101,7 @@ describe('Buffer Parsing', () => {
       type: 'string',
       accountId: 0,
       checkName: 'checkName',
+      streamTags: [],
     } ])
   })
 })
