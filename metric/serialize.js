@@ -2,7 +2,7 @@
 
 const flatbuffers = require('flatbuffers').flatbuffers
 
-const { Metric, MetricList } = require('./classes.js')
+const Metric = require('./metric.js')
 const validate = require('./validate')
 const circonus = require('../circonus')
 
@@ -68,13 +68,16 @@ function serializeMetric(metric, builder) {
   }
 
   // stream_tags: [string] (id: 5)
-  let streamTagsOffset = circonus.MetricValue.createStreamTagsVector(builder,
-    (metric.streamTags || []).reduce((array, tag, index) => {
-      let tagOffset = builder.createString(tag)
-      array.push(tagOffset)
-      return array
-    }, [])
-  )
+  let streamTagsOffset = null
+  if ((metric.streamTags != null) && (metric.streamTags.length > 0)) {
+    streamTagsOffset = circonus.MetricValue.createStreamTagsVector(builder,
+      (metric.streamTags || []).reduce((array, tag, index) => {
+        let tagOffset = builder.createString(tag)
+        array.push(tagOffset)
+        return array
+      }, [])
+    )
+  }
 
   // table MetricValue
   circonus.MetricValue.startMetricValue(builder)
@@ -83,7 +86,11 @@ function serializeMetric(metric, builder) {
   circonus.MetricValue.addValueType(builder, metricValueType) // _type (id: 2)
   circonus.MetricValue.addValue(builder, metricValueOffset) // MetricValueUnion (id: 3)
   circonus.MetricValue.addGeneration(builder, 0) // short = 0 (id: 4)
-  circonus.MetricValue.addStreamTags(builder, streamTagsOffset) // [string] (id: 5)
+
+  if (streamTagsOffset != null) {
+    circonus.MetricValue.addStreamTags(builder, streamTagsOffset) // [string] (id: 5)
+  }
+
   let valueOffset = circonus.MetricValue.endMetricValue(builder)
 
   /* ------------------------------------------------------------------------ *
@@ -116,8 +123,25 @@ function serializeMetric(metric, builder) {
 }
 
 function serialize(what) {
-  if (what instanceof MetricList) {
+  if (Array.isArray(what)) {
+    let builder = new flatbuffers.Builder(1024)
 
+    let offsets = circonus.MetricList.createMetricsVector(builder,
+      what.reduce((array, metric, index) => {
+        if (! (metric instanceof Metric)) metric = validate(metric)
+        let offset = serializeMetric(metric, builder)
+        array.push(offset)
+        return array
+      }, [])
+    )
+
+    circonus.MetricList.startMetricList(builder)
+    circonus.MetricList.addMetrics(builder, offsets)
+    let list = circonus.MetricList.endMetricList(builder)
+
+    circonus.MetricList.finishMetricListBuffer(builder, list)
+
+    return Buffer.from(builder.asUint8Array())
   } else if (what instanceof Metric) {
     let builder = new flatbuffers.Builder(1024)
     let offset = serializeMetric(what, builder)
