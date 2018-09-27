@@ -1,5 +1,3 @@
-'use strict'
-
 // Our internal Metric class
 class Metric {
   constructor(object) {

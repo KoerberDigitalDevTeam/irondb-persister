@@ -1,5 +1,3 @@
-'use strict'
-
 const Metric = require('./metric.js')
 const schema = require('./schema.js')
 const Validator = require('../lib/validator.js')

@@ -1,15 +1,22 @@
-'use strict'
-
 module.exports = {
+  'env': {
+    'es6': true,
+    'node': true,
+    'mocha': true,
+  },
   'extends': 'google',
   'parserOptions': {
-     'ecmaVersion': 2017,
+    'ecmaVersion': 2017,
+    'sourceType': 'module',
   },
   'rules': {
     'array-bracket-spacing': [ 'error', 'always' ],
-    'camelcase': [ 'off' ],
-    'guard-for-in': [ 'off' ],
+    'camelcase': 'off',
+    'eol-last': [ 'error', 'always' ],
+    'guard-for-in': 'off',
     'max-len': 'off',
+    'no-multiple-empty-lines': [ 'error', { 'max': 2, 'maxBOF': 0, 'maxEOF': 1 } ],
+    'no-undef': 'error',
     'object-curly-spacing': [ 'error', 'always' ],
     'one-var': [ 'off' ],
     'require-jsdoc': 'off',
