@@ -1,3 +1,5 @@
+'use strict'
+
 const { Metric, parse, serialize } = require('..')
 const expect = require('chai').expect
 

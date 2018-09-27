@@ -1,3 +1,5 @@
+'use strict'
+
 const Metric = require('./metric.js')
 
 const parse = require('./parse.js')

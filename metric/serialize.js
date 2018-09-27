@@ -1,3 +1,5 @@
+'use strict'
+
 const flatbuffers = require('flatbuffers').flatbuffers
 
 const Metric = require('./metric.js')

@@ -1,3 +1,5 @@
+'use strict'
+
 module.exports = {
   'env': {
     'es6': true,
@@ -7,7 +9,7 @@ module.exports = {
   'extends': 'google',
   'parserOptions': {
     'ecmaVersion': 2017,
-    'sourceType': 'module',
+    'sourceType': 'script',
   },
   'rules': {
     'array-bracket-spacing': [ 'error', 'always' ],

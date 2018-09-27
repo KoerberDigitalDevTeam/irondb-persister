@@ -1,3 +1,5 @@
+'use strict'
+
 const flatbuffers = require('flatbuffers').flatbuffers
 const circonus = require('../circonus')
 const Metric = require('./metric.js')
